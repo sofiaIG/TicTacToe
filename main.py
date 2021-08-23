@@ -36,6 +36,8 @@ def user_inpur():
     while True:
         try:
             users_choice = int(input("\nEnter number: "))
+            while users_choice not in range(0, 9):
+                users_choice = input("Please only enter integer from 0-8:")
         except ValueError:
             print("Not an integer! Try again.")
             #continue
@@ -51,9 +53,9 @@ def enter_input():
     "This function is used to get players decision and place it on the board"
     board_user = remove_squares_with_x(board)# That did not work
     users_choice = user_inpur()
-    while users_choice not in range(0,9): #and users_choice not in board_user:
-        users_choice = input("Please only enter integer from 0-8:")
-        user_inpur()
+    # while users_choice not in range(0,9): #and users_choice not in board_user:
+    #     users_choice = input("Please only enter integer from 0-8:")
+    #     user_inpur()
     adding_decision_into_board(users_choice, board, x)
 
 
@@ -148,3 +150,4 @@ while True:
         display_board(board)
         break
     win_game(board, o)
+#This is to check if the branch is working
