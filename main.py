@@ -128,8 +128,8 @@ def adding_decision_into_board(value, board, character):
     return board
 
 
+the_board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
 while True:
-    the_board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
     display_board(the_board)
     enter_input(the_board)
     if win_game(the_board, X) is True or winning_diagonally(the_board, X) is True:
