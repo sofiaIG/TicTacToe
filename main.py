@@ -7,21 +7,22 @@ board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
 
 def display_board(board: list):
     "This function in printing the board with its current values"
-    print("+-------+-------+-------+\n" "|       |       |       |\n"\
-          "|   {}   |   {}   |   {}   |\n"\
-          "|       |       |       |\n".format(board[0][0], board[0][1], board[0][2]), end ="")
     print("+-------+-------+-------+\n" "|       |       |       |\n"
-          "|   {}   |   {}   |   {}   |\n"\
-          "|       |       |       |\n".format(board[1][0], board[1][1], board[1][2]), end ="")
-    print("+-------+-------+-------+\n" "|       |       |       |\n"\
-          "|   {}   |   {}   |   {}   |\n""|       |       |       |\n"\
-          "+-------+-------+-------+".format(board[2][0], board[2][1], board[2][2]), end ="")
+          "|   {}   |   {}   |   {}   |\n"
+          "|       |       |       |\n".format(board[0][0], board[0][1], board[0][2]), end="")
+    print("+-------+-------+-------+\n" "|       |       |       |\n"
+          "|   {}   |   {}   |   {}   |\n"
+          "|       |       |       |\n".format(board[1][0], board[1][1], board[1][2]), end="")
+    print("+-------+-------+-------+\n" "|       |       |       |\n"
+          "|   {}   |   {}   |   {}   |\n""|       |       |       |\n"
+          "+-------+-------+-------+".format(board[2][0], board[2][1], board[2][2]), end="")
 
 
 def remove_squares_with_x(board):
     "This is a function will create a board that only has squares that are not selected by X and O"
-    board_decision_removed = [[i for i in j if type(i)==int]for j in board]
+    board_decision_removed = [[i for i in j if type(i) == int]for j in board]
     return board_decision_removed
+
 
 def enter_input():
     "This function is used to get players decision and place it on the board"
@@ -29,14 +30,15 @@ def enter_input():
     flat_board_user = [i for sublist in board_user for i in sublist]
     users_choice = int(input("\n Please add a number from 0 to 8: "))
     while users_choice not in flat_board_user:
-        users_choice = int(input("\nPlease only enter numbers from 0-8 that has not been selected already):"))
+        users_choice = int(input(
+            "\nPlease only enter numbers from 0-8 that has not been selected already):"))
     adding_decision_into_board(users_choice, board, x)
 
 
 def opponents_move():
     "This function is used to get the user's move and add it into the board"
     board_without_x_o = remove_squares_with_x(board)
-    if len(board_without_x_o)==0:
+    if len(board_without_x_o) == 0:
         "You have finished the game"
     else:
         flat = [x for sublist in board_without_x_o for x in sublist]
@@ -45,7 +47,7 @@ def opponents_move():
         adding_decision_into_board(number_selected, board, o)
 
 
-def win_game(board,character):
+def win_game(board, character):
     "This function in used to decide who is winning. The functionality of it is limited to vertical and horizontal winning "
     position_j = -1
     list_vertically = []
@@ -97,9 +99,9 @@ def winning_diagonally(board, character):
 
 
 def adding_decision_into_board(value, board, character):
-    number = -1#Creating number as I can not use i for index so I am replacing it with number
+    number = -1  # Creating number as I can not use i for index so I am replacing it with number
     for i in board:
-        number+=1
+        number += 1
         for j in i:
             index = i.index(j)
             if board[number][index] == value:
@@ -111,7 +113,7 @@ def adding_decision_into_board(value, board, character):
 while True:
     display_board(board)
     enter_input()
-    if win_game(board,x) == True or winning_diagonally(board,x) == True:
+    if win_game(board, x) == True or winning_diagonally(board, x) == True:
         display_board(board)
         break
     flat = [i for sublist in board for i in sublist]  # This is not working
@@ -119,7 +121,7 @@ while True:
         print("The game is finished")
         break
     opponents_move()
-    if win_game(board,o) == True or winning_diagonally(board, o) == True:
+    if win_game(board, o) == True or winning_diagonally(board, o) == True:
         display_board(board)
         break
     win_game(board, o)
