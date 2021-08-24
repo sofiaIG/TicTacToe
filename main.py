@@ -1,22 +1,8 @@
 import random
-#Bugs:
-#-Board once the there are no other spaces. Need message that the game is finished (this has been completed)
-#-Player needs to be able to win diagonally which they cannot now (this has been completed too).
-#-We need to control the input of the player. Currently if you enter a space that is already taken you are losing your turn
-#Also we need to do input validation. Needs to be an int that is from 0-8
+
 x = "X"
 o = "O"
-board = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-number_count = 0
-for i in range(0, 3):
-    count = 0
-    for j in range(1, 4):
-        board[i][count] = number_count
-        if count >= 9:
-            break
-        else:
-            count += 1
-            number_count += 1
+board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
 
 
 def display_board(board: list):
@@ -31,18 +17,6 @@ def display_board(board: list):
           "|   {}   |   {}   |   {}   |\n""|       |       |       |\n"\
           "+-------+-------+-------+".format(board[2][0], board[2][1], board[2][2]), end ="")
 
-def user_inpur():
-    "This function is created to check whether the user's input is an"
-    while True:
-        try:
-            users_choice = int(input("\nEnter number: "))
-            while users_choice not in range(0, 9):
-                users_choice = input("Please only enter integer from 0-8:")
-        except ValueError:
-            print("Not an integer! Try again.")
-            #continue
-        else:
-            return users_choice
 
 def remove_squares_with_x(board):
     "This is a function will create a board that only has squares that are not selected by X and O"
@@ -51,11 +25,11 @@ def remove_squares_with_x(board):
 
 def enter_input():
     "This function is used to get players decision and place it on the board"
-    board_user = remove_squares_with_x(board)# That did not work
-    users_choice = user_inpur()
-    # while users_choice not in range(0,9): #and users_choice not in board_user:
-    #     users_choice = input("Please only enter integer from 0-8:")
-    #     user_inpur()
+    board_user = remove_squares_with_x(board)
+    flat_board_user = [i for sublist in board_user for i in sublist]
+    users_choice = int(input("\n Please add a number from 0 to 8: "))
+    while users_choice not in flat_board_user:
+        users_choice = int(input("\nPlease only enter numbers from 0-8 that has not been selected already):"))
     adding_decision_into_board(users_choice, board, x)
 
 
@@ -92,6 +66,7 @@ def win_game(board,character):
         return True
     else:
         return False
+
 
 def winning_diagonally(board, character):
     number = 0
@@ -133,7 +108,6 @@ def adding_decision_into_board(value, board, character):
     return board
 
 
-
 while True:
     display_board(board)
     enter_input()
@@ -144,10 +118,8 @@ while True:
     if set(flat) == {x, o}:
         print("The game is finished")
         break
-    display_board(board)
     opponents_move()
     if win_game(board,o) == True or winning_diagonally(board, o) == True:
         display_board(board)
         break
     win_game(board, o)
-#This is to check if the branch is working
