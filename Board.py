@@ -1,7 +1,8 @@
 class Board:
-    def __init__(self, board):
+    def __init__(self, board, winning_combo_set):
         self.board = board
         self.value = None
+        self.winning_combo_set = winning_combo_set
 
     def display_board(self):
         """
@@ -32,57 +33,23 @@ class Board:
                     break
         return self.board
 
-    def win_game(self, character):
-        """
-        This function in used to decide who is winning. The functionality
-        of it is limited to vertical and horizontal winning
-        """
-        position_j = -1
-        list_vertically = []
-        list_diagonally = []
+    def winning_positions(self, character):
+        loop_number = -1
+        count = -1
+        list_of_selected_squares = 0
         for i in self.board:
-            if set(i) == {character}:
-                print(f"{character} has won!")
-                return True
-            for j in enumerate(i):
-                if j[-1] == character:
-                    if position_j == -1:
-                        position_j = j[0]
-                    elif position_j == j[0]:
-                        list_vertically.append(j[-1])
-        if len(list_diagonally) == 2 or len(list_vertically) == 2:
+            loop_number += 1
+            for j in i:
+                count += 1
+                if j == character:
+                    list_of_selected_squares.append(count)
+        return list_of_selected_squares
+
+    def winner(self, winning_combo_set, list_squares, character):
+        self.list_squares = self.winning_positions(character)
+        if set(list_squares) in winning_combo_set:
             print(f"{character} wins")
             return True
         else:
             return False
 
-    def winning_diagonally(self, character):
-        """
-        This function in used to decide who is winning. The functionality
-        of it is limited to diagonal winning
-        """
-        number = 0
-        list_for_1st_loop = []
-        list_for_2st_loop = []
-        for i in self.board:
-            for _ in i:
-                if i[number] == character:
-                    list_for_1st_loop.append(1)
-                    if number <= 2:
-                        number += 1
-                        break
-        if len(list_for_1st_loop) == 3:
-            print(f"{character} wins")
-            return True
-        else:
-            number_1 = 2
-            for i in self.board:
-                for _ in i:
-                    if i[number_1] == character:
-                        list_for_2st_loop.append(1)
-                    if number_1 >= 0:
-                        number_1 -= 1
-                        break
-        if len(list_for_2st_loop) == 3:
-            print(f"{character} wins")
-            return True
