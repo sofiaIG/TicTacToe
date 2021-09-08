@@ -1,7 +1,6 @@
 class Board:
     def __init__(self, board, winning_combo_set):
         self.board = board
-        self.value = None
         self.winning_combo_set = winning_combo_set
 
     def display_board(self):
@@ -23,31 +22,33 @@ class Board:
         """
         Add a player's decision to the board and return the updated board
         """
-        number = -1  # Creating number as I can not use i for index so I am replacing it with number
+        number_i = -1  #This has been amended. If bugs occur, refer back to github for history.
         for i in self.board:
-            number += 1
-            for j in i:
-                index = i.index(j)
-                if self.board[number][index] == self.value:
-                    self.board[number][index] = character
-                    break
+            number_i += 1#This is to count rows
+            count = -1#This is to count colums
+            for _ in i:
+                count += 1
+                if _ == value:
+                    self.board[number_i][count] = character
         return self.board
 
-    def winning_positions(self, character):
+
+
+    def winning_positions(self, character):#This function is created to return a set that contains the indices of the character.
         loop_number = -1
         count = -1
-        list_of_selected_squares = 0
+        set_of_selected_squares = set()
         for i in self.board:
             loop_number += 1
             for j in i:
                 count += 1
                 if j == character:
-                    list_of_selected_squares.append(count)
-        return list_of_selected_squares
+                    set_of_selected_squares.add(count)
+        return set_of_selected_squares
 
-    def winner(self, winning_combo_set, list_squares, character):
-        self.list_squares = self.winning_positions(character)
-        if set(list_squares) in winning_combo_set:
+    def winner(self, winning_combo_set, set_squares, character):
+        self.set_squares = self.winning_positions(character)
+        if set_squares in winning_combo_set:
             print(f"{character} wins")
             return True
         else:
