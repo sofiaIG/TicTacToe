@@ -1,7 +1,7 @@
 class Board:
-    def __init__(self, board):
+    def __init__(self, board, winning_combo_set):
         self.board = board
-        self.value = None
+        self.winning_combo_set = winning_combo_set
 
     def display_board(self):
         """
@@ -22,67 +22,35 @@ class Board:
         """
         Add a player's decision to the board and return the updated board
         """
-        number = -1  # Creating number as I can not use i for index so I am replacing it with number
+        number_i = -1  #This has been amended. If bugs occur, refer back to github for history.
         for i in self.board:
-            number += 1
-            for j in i:
-                index = i.index(j)
-                if self.board[number][index] == self.value:
-                    self.board[number][index] = character
-                    break
+            number_i += 1#This is to count rows
+            count = -1#This is to count colums
+            for _ in i:
+                count += 1
+                if _ == value:
+                    self.board[number_i][count] = character
         return self.board
 
-    def win_game(self, character):
-        """
-        This function in used to decide who is winning. The functionality
-        of it is limited to vertical and horizontal winning
-        """
-        position_j = -1
-        list_vertically = []
-        list_diagonally = []
+
+
+    def winning_positions(self, character):#This function is created to return a set that contains the indices of the character.
+        loop_number = -1
+        count = -1
+        set_of_selected_squares = set()
         for i in self.board:
-            if set(i) == {character}:
-                print(f"{character} has won!")
-                return True
-            for j in enumerate(i):
-                if j[-1] == character:
-                    if position_j == -1:
-                        position_j = j[0]
-                    elif position_j == j[0]:
-                        list_vertically.append(j[-1])
-        if len(list_diagonally) == 2 or len(list_vertically) == 2:
+            loop_number += 1
+            for j in i:
+                count += 1
+                if j == character:
+                    set_of_selected_squares.add(count)
+        return set_of_selected_squares
+
+    def winner(self, winning_combo_set, set_squares, character):
+        self.set_squares = self.winning_positions(character)
+        if set_squares in winning_combo_set:
             print(f"{character} wins")
             return True
         else:
             return False
 
-    def winning_diagonally(self, character):
-        """
-        This function in used to decide who is winning. The functionality
-        of it is limited to diagonal winning
-        """
-        number = 0
-        list_for_1st_loop = []
-        list_for_2st_loop = []
-        for i in self.board:
-            for _ in i:
-                if i[number] == character:
-                    list_for_1st_loop.append(1)
-                    if number <= 2:
-                        number += 1
-                        break
-        if len(list_for_1st_loop) == 3:
-            print(f"{character} wins")
-            return True
-        else:
-            number_1 = 2
-            for i in self.board:
-                for _ in i:
-                    if i[number_1] == character:
-                        list_for_2st_loop.append(1)
-                    if number_1 >= 0:
-                        number_1 -= 1
-                        break
-        if len(list_for_2st_loop) == 3:
-            print(f"{character} wins")
-            return True
