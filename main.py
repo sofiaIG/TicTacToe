@@ -1,29 +1,26 @@
-from Player import Player
-from Player import my_board
-from Player import win_combinations
-from Player import the_board
-from Player import X
-from Player import O
+import Player
+import Board
 
 """
 This is a game of TicTacToe
 """
 
 
-my_player = Player()
+my_player = Player.Player()
+my_board = Board.Board()
 
 while True:
     my_board.display_board()
-    my_player.enter_input()
-    list_numbers_with_character = my_board.winning_positions(X)
-    if my_board.winner(win_combinations, list_numbers_with_character, X):
+    my_player.enter_input(my_board)
+    list_numbers_with_character = my_board.winning_positions(my_board.X)
+    if my_board.winner(my_board.X):
         my_board.display_board()
         break
-    flat = [i for sublist in the_board for i in sublist]
-    if set(flat) == {X, O}:
+    flat = [i for sublist in my_board.board for i in sublist]
+    if set(flat) == {my_board.X, my_board.O}:
         print("The game is finished")
         break
-    my_player.opponents_move()
-    list_numbers_with_character = my_board.winning_positions(O)
-    if my_board.winner(win_combinations, list_numbers_with_character, O):
+    my_player.opponents_move(my_board)
+    list_numbers_with_character = my_board.winning_positions(my_board.O)
+    if my_board.winner(my_board.O):
         break
