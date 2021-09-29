@@ -3,7 +3,7 @@ class Board:
     X = "X"
     O = "⬤"
     blank_board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
-    win_combinations = ({0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 4}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6})
+    win_combinations = ({0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6})
 
     def __init__(self, board=blank_board):
         self.board = board
@@ -38,7 +38,7 @@ class Board:
         return self.board
 
 
-    def winning_positions(self, character):
+    def character_positions(self, character):
         """
         This function is created to return a set that contains the indices of the character.
         """
@@ -54,10 +54,12 @@ class Board:
         return set_of_selected_squares
 
     def winner(self, character):
-        set_squares = self.winning_positions(character)
-        if set_squares in Board.win_combinations:
-            print(f"{character} wins")
-            return True
-        else:
-            return False
+        set_squares = self.character_positions(character)
+        for i in Board.win_combinations:
+            i_intersection_set_sq = i.intersection(set_squares)
+            if len(i_intersection_set_sq) == 3:
+                print(f"{character} wins")
+                return True
+
+
 
