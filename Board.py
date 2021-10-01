@@ -61,5 +61,13 @@ class Board:
                 print(f"{character} wins")
                 return True
 
+    def finished_game(self):
+        flat = [i for sublist in Board.blank_board for i in sublist]
+        if set(flat) == {Board.X, Board.O}:
+            print("The game is finished")
+            return True
+        else:
+            return False
+
 
 

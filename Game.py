@@ -8,10 +8,8 @@ class Game:
             if board.winner(board.X):
                 board.display_board()
                 break
-            flat = [i for sublist in board.board for i in sublist]
-            if set(flat) == {board.X, board.O}:
+            if board.finished_game() is True:
                 board.display_board()
-                print("The game is finished")
                 break
             player.opponents_move(board)
             if board.winner(board.O):
