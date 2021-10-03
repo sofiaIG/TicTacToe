@@ -8,7 +8,7 @@ class Player:
         positions_x = board.character_positions(board.X)
         positions_y = board.character_positions(board.O)
         number_selected = -1
-        flat_board_without_decision = [i for i in board.flat_board if type(i) == int]
+        flat_board_without_decision = [i for i in board.flat_board() if type(i) == int]
 
         for row in board.board:  # If in a win combo there are already 2 O. The set would be completed instead of blocking
             # move.

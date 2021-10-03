@@ -3,11 +3,13 @@ class Board:
     X = "X"
     O = "⬤"
     blank_board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
-    flat_board = [i for sublist in blank_board for i in sublist]
     win_combinations = ({0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6})
 
     def __init__(self, board=blank_board):
         self.board = board
+
+    def flat_board(self):
+        return [i for sublist in self.board for i in sublist]
 
     def display_board(self):
         """
@@ -63,7 +65,7 @@ class Board:
                 return True
 
     def finished_game(self):
-        if set(Board.flat_board) == {Board.X, Board.O}:
+        if set(self.flat_board()) == {Board.X, Board.O}:
             print("The game is finished")
             return True
         else:
