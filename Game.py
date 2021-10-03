@@ -15,3 +15,6 @@ class Game:
             if board.winner(board.O):
                 board.display_board()
                 break
+            if board.finished_game() is True:
+                board.display_board()
+                break
